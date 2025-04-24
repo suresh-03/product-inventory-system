@@ -1,0 +1,6 @@
+# Build results
+bin/
+obj/
+
+# LibMan cache
+wwwroot/lib/
