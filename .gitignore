@@ -4,3 +4,6 @@ obj/
 
 # LibMan cache
 wwwroot/lib/
+
+# DB Migrations
+Migrations/

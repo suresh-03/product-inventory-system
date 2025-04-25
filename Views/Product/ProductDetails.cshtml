@@ -1,0 +1,54 @@
+@model product_inventory_system.Models.Product
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+    <div id="alert-message" class="alert d-none" role="alert"></div>
+    <div class="product-details-container container mt-5 flex-grow-1">
+        <div class="card shadow-lg">
+            <div class="card-header text-center bg-primary text-white">
+                <h2>Product Details</h2>
+            </div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <h4>Product Name</h4>
+                        <p class="lead">@(char.ToUpper(Model.ProductName[0])+Model.ProductName.Substring(1))</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Category</h4>
+                        <p class="lead">@(char.ToUpper(Model.Category[0])+Model.Category.Substring(1))</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Quantity</h4>
+                        <p class="lead">@Model.Quantity</p>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <h4>Price</h4>
+                        <p class="lead">@Model.Price.ToString("C")</p> <!-- Formats as currency -->
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Total Price</h4>
+                        <p class="lead">@((Model.Quantity * Model.Price).ToString("C"))</p>
+                    </div>
+                    <div class="col-md-8">
+                        <h4>Description</h4>
+                        <div class="description-container">
+                        <p class="lead">@Model.Description</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <a href="@Url.Action("EditProductForm", "Product", new { id = Model.Id })" class="btn btn-warning">Edit Product</a>
+                    <a href="@Url.Action("Index", "Product")" class="btn btn-secondary">Back to Products</a>
+                    <button class="btn btn-danger" onclick="handleDeleteRequest('@Url.Action("DeleteProduct", "Product", new { id = @Model.Id })')">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts{
+    <script src="~/js/delete-product.js"></script>
+}

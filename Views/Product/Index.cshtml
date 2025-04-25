@@ -1,0 +1,51 @@
+@model List<product_inventory_system.Models.Product>
+
+@{
+	ViewData["Title"] = "Products";
+}
+
+
+<div class="products-list-container">
+@if(Model.Count != 0){
+<div id="alert-message-product" class="alert d-none" role="alert"></div>
+<div>
+<table class="table table-striped scrolldown">
+    <tr>
+        <th>SI.No</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th colspan="3">Actions</th>
+    </tr>
+@for(int index = 0; index < Model.Count; index++)
+{
+    <tr>
+        <td>@(index+1)</td>
+        <td>@(char.ToUpper(Model[index].ProductName[0]) + Model[index].ProductName.Substring(1))</td>
+        <td>@(char.ToUpper(Model[index].Category[0]) + Model[index].Category.Substring(1))</td>
+        <td>@Model[index].Quantity</td>
+        <td>@Model[index].Price</td>
+        <td><a class="edit-product" href="@Url.Action("EditProductForm","Product",new {Id = @Model[index].Id})">Edit</a></td>
+        <td><button class="delete-product" onclick="handleDeleteRequest('@Url.Action("DeleteProduct", "Product", new { id = @Model[index].Id })')">Delete</button></td>
+        <td><a class="view-product" href="@Url.Action("ProductDetails","Product",new {Id = @Model[index].Id})">Details</a></td>      
+    </tr>
+}
+</table>
+</div>
+<div class="delete-all-container">
+    <button class="btn btn-danger" onclick="deleteAll('@Url.Action("DeleteAll","Product")')">Delete All</button>
+</div>
+
+}
+else{
+    <div class="no-product">
+	<h1>No Products Available!</h1>
+    </div>
+}
+
+<div>
+
+@section Scripts{
+    <script src="~/js/delete-product.js"></script>
+}
