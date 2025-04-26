@@ -2,7 +2,7 @@ namespace product_inventory_system.Helpers;
 
 public static class StringHelpers
 {
-    public static string CapitalizeFirstLetter(string input)
+    public static string CapitalizeFirstLetter(string? input)
     {
         if (string.IsNullOrWhiteSpace(input))
             return input;

@@ -159,13 +159,13 @@ namespace product_inventory_system.Controllers
             if (string.IsNullOrWhiteSpace(product.ProductName))
                 errors.Add("Product name is required.");
 
-            if (product.Price == null || product.Price <= 0)
+            if (product.Price <= 0)
                 errors.Add("Price must be greater than 0.");
 
             if (!IsValidCategory(product.Category))
                 errors.Add("Category is invalid");
 
-            if (product.Quantity == null || product.Quantity < 0)
+            if (product.Quantity < 0)
                 errors.Add("Quantity cannot be negative.");
 
             if (string.IsNullOrWhiteSpace(product.Description))
@@ -181,7 +181,7 @@ namespace product_inventory_system.Controllers
         }
 
         // Validates if a category string is within the allowed set
-        private bool IsValidCategory(string category)
+        private bool IsValidCategory(string? category)
         {
             var validCategories = new HashSet<string>
             {
@@ -195,7 +195,10 @@ namespace product_inventory_system.Controllers
 
         // Utility methods for generating consistent JSON responses
         private JsonResult SuccessJson(string message, string? redirectUrl)
-        {
+        {   
+            if(string.IsNullOrWhiteSpace(redirectUrl)){
+                return NotFoundJson("Url not Found");
+            }
             Response.StatusCode = 200;
             return Json(new { success = true, redirectUrl, message });
         }
