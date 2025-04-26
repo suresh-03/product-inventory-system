@@ -3,6 +3,14 @@
 <h2>A simple ASP.NET Core MVC application for managing product inventory.
 Project Setup (Localhost)</h2>
 <br>
+<h3>Dependencies</h3>
+<ul>
+    <li>.NET Version 9 SDK</li>
+    <li>Entity Framework Core</li>
+    <li>MySql Version 8</li>
+</ul>
+<br>
+
 <h3>Follow the steps below to set up and run the project on your local machine:</h3>
 
 <h4>1.Clone the Repository:</h4>
