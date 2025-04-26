@@ -36,6 +36,12 @@ public class ProductController : Controller
                 return Json(new {success = false,message = "Product should not be null!"});
             }
 
+            var result = ValidateProduct(product);
+            if(result != null){
+                Response.StatusCode = 400;
+                return result;
+            }
+
             bool exists = CheckProductExists(product);
             if(exists){
                 Response.StatusCode = 409;
@@ -44,7 +50,7 @@ public class ProductController : Controller
             _context.Product.Add(product);
             _context.SaveChanges();
             Response.StatusCode = 200;
-            return Json(new {success = true,redirectUrl = Url.Action("Index","Product")});
+            return Json(new {success = true,redirectUrl = Url.Action("Index","Product"), message = "Product Added Successfully"});
         }
         catch(Exception e){
             Response.StatusCode = 500;
@@ -71,11 +77,18 @@ public class ProductController : Controller
                 Response.StatusCode = 400;
                 return Json(new {success = false,message = "Product and Id should not be null!"});
             }
+
+            var result = ValidateProduct(product);
+            if(result != null){
+                Response.StatusCode = 400;
+                return result;
+            }
+
             product.Id = Id;
             _context.Product.Update(product); 
             _context.SaveChanges();
             Response.StatusCode = 200;
-            return Json(new {success = true,redirectUrl = Url.Action("Index","Product")});
+            return Json(new {success = true,redirectUrl = Url.Action("Index","Product"),message = "Product Updated Successfully"});
         }
         catch(Exception e){
             Response.StatusCode = 500;
@@ -105,7 +118,7 @@ public class ProductController : Controller
         _context.Product.Remove(product);
         _context.SaveChanges();
         Response.StatusCode = 200;
-        return Json(new { success = true, redirectUrl = Url.Action("Index","Product")});
+        return Json(new { success = true, redirectUrl = Url.Action("Index","Product"), message = "Product Deleted Successfully"});
         }
         catch(Exception e){
             Response.StatusCode = 500;
@@ -125,7 +138,7 @@ public class ProductController : Controller
             _context.Product.RemoveRange(allProducts);
             _context.SaveChanges();
              Response.StatusCode = 200;
-            return Json(new { success = true, redirectUrl = Url.Action("Index","Product")});
+            return Json(new { success = true, redirectUrl = Url.Action("Index","Product"), message = "All Products Deleted Successfully"});
         }
         catch(Exception e){
             Response.StatusCode = 500;
@@ -145,4 +158,53 @@ public class ProductController : Controller
     private bool CheckProductExists(Product product){
         return _context.Product.Any(p => p.ProductName == product.ProductName && p.Category == product.Category);
     }
+
+
+    private bool IsValidCategory(string category)
+    {
+        if (string.IsNullOrWhiteSpace(category))
+            return false;
+
+        var validCategories = new HashSet<string>
+        {
+            "electronics", "clothing", "books", "furniture", "toys",
+            "beauty", "home", "sports", "automotive", "grocery",
+            "office", "health", "jewelry", "garden", "pet"
+        };
+        
+        return validCategories.Contains(category.ToLower());
+    }
+
+    
+    private JsonResult ValidateProduct(Product product)
+    {
+        var errors = new List<string>();
+
+        if (string.IsNullOrWhiteSpace(product.ProductName))
+            errors.Add("Product name is required.");
+
+        if (product.Price == null || product.Price <= 0)
+            errors.Add("Price must be greater than 0.");
+
+        if (!IsValidCategory(product.Category))
+            errors.Add("Category is invalid");
+
+        if (product.Quantity == null || product.Quantity < 0)
+            errors.Add("Quantity cannot be negative.");
+
+        if (string.IsNullOrWhiteSpace(product.Description))
+            errors.Add("Description is required");
+
+        if (errors.Count > 0)
+        {
+            return Json(new
+            {
+                success = false,
+                message = string.Join(", ",errors)
+            });
+        }
+
+        return null;
+    }
+
 }

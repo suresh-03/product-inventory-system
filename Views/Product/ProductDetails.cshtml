@@ -1,4 +1,5 @@
 @model product_inventory_system.Models.Product
+@using product_inventory_system.Helpers
 
 @{
     ViewData["Title"] = "Product Details";
@@ -13,11 +14,11 @@
                 <div class="row mb-4">
                     <div class="col-md-4">
                         <h4>Product Name</h4>
-                        <p class="lead">@(char.ToUpper(Model.ProductName[0])+Model.ProductName.Substring(1))</p>
+                        <p class="lead">@StringHelpers.CapitalizeFirstLetter(Model.ProductName)</p>
                     </div>
                     <div class="col-md-4">
                         <h4>Category</h4>
-                        <p class="lead">@(char.ToUpper(Model.Category[0])+Model.Category.Substring(1))</p>
+                        <p class="lead">@StringHelpers.CapitalizeFirstLetter(Model.Category)</p>
                     </div>
                     <div class="col-md-4">
                         <h4>Quantity</h4>
@@ -50,5 +51,6 @@
     </div>
 
     @section Scripts{
+    <script src="~/js/alerts.js"></script>
     <script src="~/js/delete-product.js"></script>
-}
+    }

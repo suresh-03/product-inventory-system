@@ -1,13 +1,14 @@
 @model List<product_inventory_system.Models.Product>
+@using product_inventory_system.Helpers
 
 @{
 	ViewData["Title"] = "Products";
 }
-
-
+<div class="container d-flex justify-content-center align-items-center product-list-alert">
+<div id="alert-message" class="alert d-none" role="alert"></div>
+</div>
 <div class="products-list-container">
 @if(Model.Count != 0){
-<div id="alert-message-product" class="alert d-none" role="alert"></div>
 <div>
 <table class="table table-striped scrolldown">
     <tr>
@@ -22,8 +23,8 @@
 {
     <tr>
         <td>@(index+1)</td>
-        <td>@(char.ToUpper(Model[index].ProductName[0]) + Model[index].ProductName.Substring(1))</td>
-        <td>@(char.ToUpper(Model[index].Category[0]) + Model[index].Category.Substring(1))</td>
+        <td>@StringHelpers.CapitalizeFirstLetter(Model[index].ProductName)</td>
+        <td>@StringHelpers.CapitalizeFirstLetter(Model[index].Category)</td>
         <td>@Model[index].Quantity</td>
         <td>@Model[index].Price</td>
         <td><a class="edit-product" href="@Url.Action("EditProductForm","Product",new {Id = @Model[index].Id})">Edit</a></td>
@@ -47,5 +48,10 @@ else{
 <div>
 
 @section Scripts{
+    <script src="~/js/alerts.js"></script>
     <script src="~/js/delete-product.js"></script>
+
+    <script>
+        displaySuccessMessage();
+    </script>
 }

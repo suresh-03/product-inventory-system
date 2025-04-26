@@ -44,6 +44,7 @@ form.addEventListener("submit", function (event) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
+            sessionStorage.setItem("successMessage",data.message);
             window.location.href = data.redirectUrl;
         } else {
             showAlert(data.message, "danger");
@@ -54,17 +55,6 @@ form.addEventListener("submit", function (event) {
         showAlert("Something went wrong.", "danger");
     });
 });
-}
-
-function showAlert(message, type = "success") {
-    const alertBox = document.getElementById("alert-message");
-    alertBox.className = `alert alert-${type}`;
-    alertBox.innerHTML = message;
-    alertBox.classList.remove("d-none");
-    setTimeout(function(){
-    	alertBox.style.display = "none";
-    },2000);
-    alertBox.style.display = "block";
 }
 
 
