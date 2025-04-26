@@ -194,7 +194,7 @@ namespace product_inventory_system.Controllers
         }
 
         // Utility methods for generating consistent JSON responses
-        private JsonResult SuccessJson(string message, string redirectUrl)
+        private JsonResult SuccessJson(string message, string? redirectUrl)
         {
             Response.StatusCode = 200;
             return Json(new { success = true, redirectUrl, message });

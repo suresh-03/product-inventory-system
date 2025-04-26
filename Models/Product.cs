@@ -12,11 +12,11 @@ public class Product{
 
 	[Required]
 	[Column("PRODUCT_NAME")]
-	public string ProductName {get; set;}
+	public string? ProductName {get; set;}
 
 	[Required]
 	[Column("CATEGORY")]
-	public string Category {get; set;}
+	public string? Category {get; set;}
 
 	[Required]
 	[Column("QUANTITY")]
@@ -28,7 +28,7 @@ public class Product{
 
 	[Required]
 	[Column("DESCRIPTION")]
-	public string Description {get; set;}
+	public string? Description {get; set;}
 
 
 	public override string ToString(){
