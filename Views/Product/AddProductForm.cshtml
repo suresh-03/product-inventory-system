@@ -28,6 +28,7 @@
     			<label for="category" class="form-label">Category</label>
     			<select id="category" name="category" class="form-select" value="@Model?.Category" required>
         			<option value="" selected disabled>-- Select Category --</option>
+                    @HtmlHelpers.RenderOption("electronics", "Electronics", Model?.Category)
                     @HtmlHelpers.RenderOption("clothing", "Clothing", Model?.Category)
                     @HtmlHelpers.RenderOption("books", "Books", Model?.Category)
                     @HtmlHelpers.RenderOption("furniture", "Furniture", Model?.Category)
