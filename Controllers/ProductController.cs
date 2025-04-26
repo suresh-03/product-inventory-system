@@ -18,16 +18,21 @@ public class ProductController : Controller
         _context = context;
     }
 
+    // returns list of products in web page
     public IActionResult Index()
     {
         var products = _context.Product.ToList();
         return View(products);
     }
 
+    // returns the form to add products
     public IActionResult AddProductForm(){
         return View();
     }
 
+    // handles http post ajax request
+    // adds the new product into the database
+    // returns appropriate json response
     [HttpPost]
     public JsonResult AddProduct([FromBody] Product product){
         try{
@@ -60,6 +65,7 @@ public class ProductController : Controller
         
     }
 
+    // returns the form to edit the product
     public IActionResult EditProductForm(int Id){
         var product = _context.Product.Find(Id);
         if(product == null){
@@ -70,6 +76,9 @@ public class ProductController : Controller
         return View("AddProductForm",product);
     }
 
+    // handles http post ajax request
+    // edit the product and update it in the database
+    // returns appropriate json response
     [HttpPost]
     public JsonResult EditProduct([FromBody] Product product,int Id){
         try{
@@ -97,6 +106,7 @@ public class ProductController : Controller
         }
     }
 
+    // returns specific product details in web page
     public IActionResult ProductDetails(int Id){
         var product = _context.Product
         .FirstOrDefault(p => p.Id == Id);
@@ -104,6 +114,9 @@ public class ProductController : Controller
         return View(product);
     }
 
+    // handles http delete ajax request
+    // delete the product in the database
+    // returns appropriate json response
     [HttpDelete]
     public JsonResult DeleteProduct(int Id){
         try{
@@ -127,6 +140,9 @@ public class ProductController : Controller
         }
     }
 
+    // handle http delete ajax request
+    // deletes all products in the database
+    // returns appropriate json response
     [HttpDelete]
     public JsonResult DeleteAll(){
         try{

@@ -20,7 +20,7 @@ public class AppDbContext : DbContext{
         	.IsUnique()
         	.HasDatabaseName("UQ_ProductName_Category");
 
-    	base.OnModelCreating(modelBuilder); // Optional but good practice
+    	base.OnModelCreating(modelBuilder);
 	}
 
 }

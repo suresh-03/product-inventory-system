@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace product_inventory_system.Models;
 
-
+// Product class mapped with Product table in DB using DBContext
 public class Product{
 
 	[Key]
